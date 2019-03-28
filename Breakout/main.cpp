@@ -24,10 +24,10 @@ Collider *mainCollider;
 
 void display(){
     glClear(GL_COLOR_BUFFER_BIT);
+    mainCollider->processCollisions();
+    
     paddle->draw();
     ball->draw();
-    
-    mainCollider->processCollisions();
     
     for(int i=0;i<5;i++)
         for(int j=0;j<10;j++)
@@ -56,11 +56,12 @@ void keyPressed(unsigned char key, int x, int y){
 
 void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
     if(code==Collider::TOP_EDGE_A || code==Collider::BOTTOM_EDGE_A){
-        ball->setVy(ball->getVy() * -1);
+        ball->setDy(ball->getDy() * -1);
     }
-    else if(code==Collider::RIGHT_EDGE_A || code==Collider::LEFT_EDGE_A){
-        ball->setVx(ball->getVx()*-1);
+    if(code==Collider::RIGHT_EDGE_A || code==Collider::LEFT_EDGE_A){
+        ball->setDx(ball->getDx() * -1);
     }
+    std::cout<<" Collision ";
 }
 
 int main(int argc, char **argv) {

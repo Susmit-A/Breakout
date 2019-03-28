@@ -7,6 +7,7 @@
 //
 
 #include "ball.hpp"
+#include<iostream>
 
 Ball::Ball(){
     slope = 1;
@@ -45,6 +46,8 @@ void Ball::getBoundingBox(int *X1,  int *X2, int *Y1, int *Y2){
 void Ball::draw(){
     x += vx*dx;
     y += vy*dy;
+    
+    std::cout<<"\n"<<x<<"\n";
     glColor3f(1, 1, 1);
     glBegin(GL_POLYGON);
     glVertex2i(x, y);
@@ -84,6 +87,22 @@ void Ball::setVx(float Vx){
 
 void Ball::setVy(float Vy){
     vy = Vy;
+}
+
+void Ball::setDx(int Dx){
+    dx = Dx;
+}
+
+void Ball::setDy(int Dy){
+    dy = Dy;
+}
+
+int Ball::getDx(){
+    return dx;
+}
+
+int Ball::getDy() {
+    return dy;
 }
 
 float Ball::getVx(){

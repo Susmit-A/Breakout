@@ -26,6 +26,8 @@ private:
         unsigned char getBuffer_A();
         unsigned char getBuffer_B();
         
+        void (*onCollision)(GameObject* a, GameObject* b, std::string name, unsigned char code);
+        
         Entry(GameObject* obj1, GameObject* obj2, std::string n="", void (*onCollision)(GameObject* a, GameObject* b, std::string name, unsigned char code) = nullptr);
     };
     std::vector<Entry> entries;

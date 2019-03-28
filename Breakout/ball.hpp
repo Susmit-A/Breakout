@@ -30,12 +30,16 @@ public:
     int getSlope();
     float getVx();
     float getVy();
+    int getDx();
+    int getDy();
     
     void setX(int X);
     void setY(int Y);
     void setSlope(float s);
     void setVx(float Vx);
     void setVy(float Vy);
+    void setDx(int Dx);
+    void setDy(int Dy);
         
     virtual int getX1();
     virtual int getX2();
