@@ -15,8 +15,8 @@ Ball::Ball(){
     dy = 1;
     x = 250;
     y = 30;
-    vx = 3;
-    vy = 3;
+    vx = 1;
+    vy = 1;
 }
 
 int Ball::getX1(){

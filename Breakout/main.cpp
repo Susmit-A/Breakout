@@ -55,13 +55,36 @@ void keyPressed(unsigned char key, int x, int y){
 }
 
 void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
-    if(code==Collider::TOP_EDGE_A || code==Collider::BOTTOM_EDGE_A){
-        ball->setDy(ball->getDy() * -1);
+    if(code==Collider::TOP_EDGE_A){
+        ball->setDy(-1);
     }
-    if(code==Collider::RIGHT_EDGE_A || code==Collider::LEFT_EDGE_A){
-        ball->setDx(ball->getDx() * -1);
+    else if(code==Collider::BOTTOM_EDGE_A){
+        ball->setDy(1);
     }
-    std::cout<<" Collision ";
+    if(code==Collider::RIGHT_EDGE_A) {
+        ball->setDx(-1);
+    }
+    else if(code==Collider::LEFT_EDGE_A){
+        ball->setDx(1);
+    }
+}
+
+void ballBlockCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
+    if(((Block*)obj2)->exists()==false)
+        return;
+    if(code==(Collider::TOP_EDGE_A|Collider::BOTTOM_EDGE_B)) {
+        ((Block*)obj2)->destroy();
+        ball->setDy(-1);
+    }
+
+}
+
+void ballPaddleCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
+    if(code==(Collider::TOP_EDGE_B | Collider::BOTTOM_EDGE_A)) {
+        ball->setDy(1);
+    }
+    ball->draw();
+    glFlush();
 }
 
 int main(int argc, char **argv) {
@@ -71,10 +94,13 @@ int main(int argc, char **argv) {
     mainCollider = new Collider();
     
     mainCollider->add(ball, nullptr, "ball_wall", ballWallCollider);
+    mainCollider->add(ball, paddle, "ball_paddle", ballPaddleCollider);
     
     for(int i=0;i<5;i++)
-        for(int j=0;j<10;j++)
+        for(int j=0;j<10;j++){
             block_matrix[i][j] = new Block(60*j, 550-(20*i));
+            mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
+        }
 
     
     glutInit(&argc, argv);

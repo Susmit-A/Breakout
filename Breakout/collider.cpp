@@ -11,6 +11,9 @@
 #include <vector>
 #include <iostream>
 
+#include <GLUT/GLUT.h>
+#include <OpenGL/OpenGL.h>
+
 Collider::Entry::Entry(GameObject* obj1,
                        GameObject* obj2,
                        std::string n,
@@ -45,18 +48,55 @@ void Collider::processCollisions(){
     for(std::vector<Entry>::iterator it = entries.begin(); it!=entries.end(); it++){
         unsigned char res = 0;
         
+        // Wall collisions
         if(it->b==nullptr || it->b==NULL){
-            if(it->a->getX2() >= 599)
-                res |= Collider::RIGHT_EDGE_A;
-            else if(it->a->getX1() <= 1)
-                res |= Collider::LEFT_EDGE_A;
-            if(it->a->getY1() >= 599)
-                res |= Collider::TOP_EDGE_A;
-            else if(it->a->getY2() <= 1)
-                res |= Collider::BOTTOM_EDGE_A;
-            it->onCollision(it->a, it->b, it->name, res);
-            return;
+            if(it->a->getX2() >= 599) {
+                res = Collider::RIGHT_EDGE_A;
+                it->onCollision(it->a, it->b, it->name, res);
+                return;
+            }
+            else if(it->a->getX1() <= 1){
+                res = Collider::LEFT_EDGE_A;
+                it->onCollision(it->a, it->b, it->name, res);
+                return;
+            }
+            if(it->a->getY1() >= 599){
+                res = Collider::TOP_EDGE_A;
+                it->onCollision(it->a, it->b, it->name, res);
+                return;
+            }
+            else if(it->a->getY2() <= 1){
+                res = Collider::BOTTOM_EDGE_A;
+                it->onCollision(it->a, it->b, it->name, res);
+                return;
+            }
         }
         
+        /*
+            The logic below is specifically for ball collision detection.
+            In general, it is valid if obj1 is smaller than obj2.
+            It is yet to be generalized.
+         */
+        else{
+            // Ball bottom edge, obsticle top edge (eg. Paddle)
+            if(it->a->getX1() >= it->b->getX1()
+               && it->a->getX2() <= it->b->getX2()
+               && it->a->getY1() <= it->b->getY2()) {
+                res = Collider::BOTTOM_EDGE_A|Collider::TOP_EDGE_B;
+                it->onCollision(it->a, it->b, it->name, res);
+                return;
+            }
+            //Ball top edge, obsticle bottom edge
+            else if(    it->a->getX1() >= it->b->getX1()
+                    &&  it->a->getX2() <= it->b->getX2()
+                    &&  it->a->getY2() >= it->b->getY1()){
+                res = Collider::BOTTOM_EDGE_B|Collider::TOP_EDGE_A;
+                it->onCollision(it->a, it->b, it->name, res);
+                return;
+            }
+            
+        }
+
+        it->onCollision(it->a, it->b, it->name, res);
     }
 }
