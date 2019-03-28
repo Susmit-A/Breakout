@@ -14,15 +14,21 @@
 #include "paddle.hpp"
 #include "block.hpp"
 #include "ball.hpp"
+#include "collider.hpp"
+#include "game_object.hpp"
 
 Paddle *paddle;
 Block *block_matrix[5][10];
 Ball *ball;
+Collider *mainCollider;
 
 void display(){
     glClear(GL_COLOR_BUFFER_BIT);
     paddle->draw();
     ball->draw();
+    
+    mainCollider->processCollisions();
+    
     for(int i=0;i<5;i++)
         for(int j=0;j<10;j++)
             block_matrix[i][j]->draw();
@@ -48,11 +54,23 @@ void keyPressed(unsigned char key, int x, int y){
     }
 }
 
+void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
+    if(code==Collider::TOP_EDGE_A || code==Collider::BOTTOM_EDGE_A){
+        ball->setVy(ball->getVy() * -1);
+    }
+    else if(code==Collider::RIGHT_EDGE_A || code==Collider::LEFT_EDGE_A){
+        ball->setVx(ball->getVx()*-1);
+    }
+}
+
 int main(int argc, char **argv) {
     srand(0);
     paddle = new Paddle();
     ball = new Ball();
-
+    mainCollider = new Collider();
+    
+    mainCollider->add(ball, nullptr, "ball_wall", ballWallCollider);
+    
     for(int i=0;i<5;i++)
         for(int j=0;j<10;j++)
             block_matrix[i][j] = new Block(60*j, 550-(20*i));

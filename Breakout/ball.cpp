@@ -77,3 +77,19 @@ void Ball::setY(int Y){
 void Ball::setSlope(float s){
     slope = s;
 }
+
+void Ball::setVx(float Vx){
+    vx = Vx;
+}
+
+void Ball::setVy(float Vy){
+    vy = Vy;
+}
+
+float Ball::getVx(){
+    return vx;
+}
+
+float Ball::getVy(){
+    return vy;
+}
