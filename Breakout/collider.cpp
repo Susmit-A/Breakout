@@ -11,8 +11,19 @@
 #include <vector>
 #include <iostream>
 
+#ifdef _WIN32
+#include <GL/glut.h>L
+
+#elif __APPLE__
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
+
+#elif __linux__
+
+#include <glut.h>
+
+#endif
+
 
 Collider::Entry::Entry(GameObject* obj1,
                        GameObject* obj2,
@@ -45,7 +56,7 @@ void Collider::add(GameObject* obj1, GameObject* obj2, std::string name, void (*
 }
 
 void Collider::processCollisions(){
-    for(std::vector<Entry>::iterator it = entries.begin(); it!=entries.end(); it++){
+    for(auto it = entries.begin(); it!=entries.end(); it++){
         unsigned char res = 0;
         
         // Wall collisions

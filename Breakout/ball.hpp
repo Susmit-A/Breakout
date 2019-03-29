@@ -12,8 +12,18 @@
 #include "colors.h"
 #include "game_object.hpp"
 
+#ifdef _WIN32
+#include <GL/glut.h>L
+
+#elif __APPLE__
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
+
+#elif __linux__
+
+#include <glut.h>
+
+#endif
 
 class Ball : public GameObject{
 private:

@@ -10,8 +10,18 @@
 #define block_hpp
 
 #include "colors.h"
+#ifdef _WIN32
+#include <GL/glut.h>L
+
+#elif __APPLE__
 #include <GLUT/GLUT.h>
 #include <OpenGL/OpenGL.h>
+
+#elif __linux__
+
+#include <glut.h>
+
+#endif
 
 #include "game_object.hpp"
 

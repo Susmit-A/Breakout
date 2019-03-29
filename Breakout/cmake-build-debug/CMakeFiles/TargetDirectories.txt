@@ -1,0 +1,3 @@
+/home/susmit/gitprojects/Breakout/Breakout/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/susmit/gitprojects/Breakout/Breakout/cmake-build-debug/CMakeFiles/main.cpp.dir
+/home/susmit/gitprojects/Breakout/Breakout/cmake-build-debug/CMakeFiles/edit_cache.dir
