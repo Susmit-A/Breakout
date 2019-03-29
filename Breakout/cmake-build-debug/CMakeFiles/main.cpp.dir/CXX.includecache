@@ -6,13 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/susmit/gitprojects/Breakout/Breakout/collider.cpp
-collider.hpp
-/home/susmit/gitprojects/Breakout/Breakout/collider.hpp
-vector
--
-iostream
--
+/home/susmit/gitprojects/Breakout/Breakout/ball.hpp
+colors.h
+/home/susmit/gitprojects/Breakout/Breakout/colors.h
+game_object.hpp
+/home/susmit/gitprojects/Breakout/Breakout/game_object.hpp
 GL/glut.h
 -
 GLUT/GLUT.h
@@ -22,6 +20,20 @@ OpenGL/OpenGL.h
 glut.h
 -
 
+/home/susmit/gitprojects/Breakout/Breakout/block.hpp
+colors.h
+/home/susmit/gitprojects/Breakout/Breakout/colors.h
+GL/glut.h
+-
+GLUT/GLUT.h
+-
+OpenGL/OpenGL.h
+-
+glut.h
+-
+game_object.hpp
+/home/susmit/gitprojects/Breakout/Breakout/game_object.hpp
+
 /home/susmit/gitprojects/Breakout/Breakout/collider.hpp
 game_object.hpp
 /home/susmit/gitprojects/Breakout/Breakout/game_object.hpp
@@ -30,6 +42,46 @@ iostream
 vector
 -
 
+/home/susmit/gitprojects/Breakout/Breakout/colors.h
+
+/home/susmit/gitprojects/Breakout/Breakout/game_object.hpp
+
+/home/susmit/gitprojects/Breakout/Breakout/main.cpp
+iostream
+-
+stdlib.h
+-
+GL/glut.h
+-
+GLUT/GLUT.h
+-
+OpenGL/OpenGL.h
+-
+glut.h
+-
+paddle.hpp
+/home/susmit/gitprojects/Breakout/Breakout/paddle.hpp
+block.hpp
+/home/susmit/gitprojects/Breakout/Breakout/block.hpp
+ball.hpp
+/home/susmit/gitprojects/Breakout/Breakout/ball.hpp
+collider.hpp
+/home/susmit/gitprojects/Breakout/Breakout/collider.hpp
+game_object.hpp
+/home/susmit/gitprojects/Breakout/Breakout/game_object.hpp
+
+/home/susmit/gitprojects/Breakout/Breakout/paddle.hpp
+colors.h
+/home/susmit/gitprojects/Breakout/Breakout/colors.h
+GL/glut.h
+-
+GLUT/GLUT.h
+-
+OpenGL/OpenGL.h
+-
+glut.h
+-
+game_object.hpp
 /home/susmit/gitprojects/Breakout/Breakout/game_object.hpp
 
 /usr/include/GL/freeglut_std.h

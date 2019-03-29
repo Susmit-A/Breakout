@@ -65,6 +65,17 @@ void keyPressed(unsigned char key, int x, int y){
     }
 }
 
+void specialKeyPressed(int key, int x, int y){
+    int px = paddle->getX();
+    int len = paddle->getLength();
+    if(key==GLUT_KEY_LEFT && px > 10){
+        paddle->moveTo(px - 10, paddle->getY());
+    }
+    else if(key==GLUT_KEY_RIGHT && px+len < 590){
+        paddle->moveTo(px + 10, paddle->getY());
+    }
+}
+
 void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
     if(code==Collider::TOP_EDGE_A){
         ball->setDy(-1);
@@ -94,8 +105,6 @@ void ballPaddleCollider(GameObject *obj1, GameObject *obj2, std::string name, un
     if(code==(Collider::TOP_EDGE_B | Collider::BOTTOM_EDGE_A)) {
         ball->setDy(1);
     }
-    ball->draw();
-    glFlush();
 }
 
 int main(int argc, char **argv) {
@@ -120,6 +129,7 @@ int main(int argc, char **argv) {
     glutCreateWindow("Breakout");
     glutDisplayFunc(display);
     glutKeyboardFunc(keyPressed);
+    glutSpecialFunc(specialKeyPressed);
     init();
     glutMainLoop();
     return 0;

@@ -47,7 +47,6 @@ void Ball::draw(){
     x += vx*dx;
     y += vy*dy;
     
-    std::cout<<"\n"<<x<<"\n";
     glColor3f(1, 1, 1);
     glBegin(GL_POLYGON);
     glVertex2i(x, y);
