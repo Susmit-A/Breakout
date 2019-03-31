@@ -49,6 +49,14 @@ int Block::getY(){
     return y;
 }
 
+int Block::getMidX() {
+    return (getX1() + getX2())/2;
+}
+
+int Block::getMidY() {
+    return (getY1() + getY2())/2;
+}
+
 int Block::getLength(){
     return len;
 }

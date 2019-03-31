@@ -7,7 +7,8 @@
 //
 
 #include "ball.hpp"
-#include<iostream>
+#include <iostream>
+#include <math.h>
 
 Ball::Ball(){
     slope = 1;
@@ -17,6 +18,7 @@ Ball::Ball(){
     y = 30;
     vx = 2;
     vy = 2;
+    angle = 45;
 }
 
 int Ball::getX1(){
@@ -35,6 +37,14 @@ int Ball::getY2(){
     return getY() + 5;
 }
 
+int Ball::getMidX() {
+    return (getX1() + getX2())/2;
+}
+
+int Ball::getMidY() {
+    return (getY1() + getY2())/2;
+}
+
 void Ball::getBoundingBox(int *X1,  int *X2, int *Y1, int *Y2){
     *X1 = getX1();
     *X2 = getX2();
@@ -44,6 +54,9 @@ void Ball::getBoundingBox(int *X1,  int *X2, int *Y1, int *Y2){
 
 
 void Ball::draw(){
+    // dx = cos((angle*3.14159265359f)/180.0f);
+    dy = sin((angle*3.14159265359f)/180.0f);
+
     x += vx*dx;
     y += vy*dy;
     
@@ -111,3 +124,12 @@ float Ball::getVx(){
 float Ball::getVy(){
     return vy;
 }
+
+float Ball::getAngle() {
+    return angle;
+}
+
+void Ball::setAngle(float a) {
+    angle = a;
+}
+

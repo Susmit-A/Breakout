@@ -27,13 +27,67 @@
 #include "ball.hpp"
 #include "collider.hpp"
 #include "game_object.hpp"
+#include <string.h>
 
 Paddle *paddle;
 Block *block_matrix[5][10];
 Ball *ball;
 Collider *mainCollider;
 
+bool gameOver = false;
+
+void text()
+{
+    char txt[10];
+
+    glBegin(GL_POLYGON);
+    glColor3f(0.4,0,0.8);
+    glVertex2f(0, 200.0f);
+    glColor3f(0.4,0,0.8);
+    glVertex2f(599, 200.0f);
+    glColor3f(0.6,0,0.6);
+    glVertex2f(599, 400);
+    glColor3f(0.6,0,0.6);
+    glVertex2f(0, 400);
+    glEnd();
+
+    strcpy(txt,"Game Over");
+    int len;
+    len = strlen(txt);
+
+    glColor3f(1,1,1);
+
+    glMatrixMode( GL_PROJECTION );
+    glPushMatrix();
+    glLoadIdentity();
+
+    gluOrtho2D( 0, 600, 0, 600 );
+
+    glMatrixMode( GL_MODELVIEW );
+    glPushMatrix();
+
+    glLoadIdentity();
+
+    glRasterPos2i(190, 300);
+
+
+    for ( int i = 0; i < len; ++i )
+    {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, txt[i]);
+    }
+
+    glPopMatrix();
+
+    glMatrixMode( GL_PROJECTION );
+    glPopMatrix();
+    glMatrixMode( GL_MODELVIEW );
+}
+
 void display(){
+    if(gameOver){
+        text();
+        return;
+    }
     glClear(GL_COLOR_BUFFER_BIT);
     
     paddle->draw();
@@ -59,6 +113,16 @@ void init() {
     gluOrtho2D(0, 600, 0, 600);
 }
 
+void reset(){
+    gameOver = false;
+    *ball = Ball();
+    *paddle = Paddle();
+    for(int i=0;i<5;i++)
+        for(int j=0;j<10;j++){
+            *block_matrix[i][j] = Block(60*j, 550-(20*i));
+        }
+}
+
 void keyPressed(unsigned char key, int x, int y){
     int px = paddle->getX();
     int len = paddle->getLength();
@@ -67,6 +131,9 @@ void keyPressed(unsigned char key, int x, int y){
     }
     else if(key=='d' && px+len < 590){
         paddle->moveTo(px + 10, paddle->getY());
+    }
+    else if(key=='r'){
+        reset();
     }
 }
 
@@ -83,10 +150,13 @@ void specialKeyPressed(int key, int x, int y){
 
 void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
     if(code==Collider::TOP_EDGE_A){
-        ball->setDy(-1);
+        ball->setAngle(ball->getAngle()+90);
     }
     else if(code==Collider::BOTTOM_EDGE_A){
-        ball->setDy(1);
+        gameOver = true;
+        text();
+        glutPostRedisplay();
+        glutSwapBuffers();
     }
     if(code==Collider::RIGHT_EDGE_A) {
         ball->setDx(-1);
@@ -99,16 +169,28 @@ void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsi
 void ballBlockCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
     if(!((Block*)obj2)->exists())
         return;
-    if(code==(Collider::TOP_EDGE_A|Collider::BOTTOM_EDGE_B)) {
+
+    if(code==(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B)) {
         ((Block*)obj2)->destroy();
-        ball->setDy(-1);
+        ball->setAngle(90);
     }
 
+//    if(code==(Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B)) {
+//        ((Block*)obj2)->destroy();
+//        ball->setAngle(ball->getAngle()+90);
+//    }
 }
 
 void ballPaddleCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
-    if(code==(Collider::TOP_EDGE_B | Collider::BOTTOM_EDGE_A)) {
-        ball->setDy(1);
+
+    // If collision along Y-axis
+    if((code&(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))
+            ==
+        (Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B)) {
+
+        // Any overlap along X-axis
+        if((code & (~(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))) !=0)
+            ball->setAngle(90);
     }
 }
 
@@ -124,7 +206,7 @@ int main(int argc, char **argv) {
     for(int i=0;i<5;i++)
         for(int j=0;j<10;j++){
             block_matrix[i][j] = new Block(60*j, 550-(20*i));
-            mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
+            //mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
         }
 
     

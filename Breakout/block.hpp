@@ -45,6 +45,8 @@ public:
     virtual int getY2();
     virtual void getBoundingBox(int *x1, int *x2, int *y1, int *y2);
     virtual void draw();
+    virtual int getMidX();
+    virtual int getMidY();
 };
 
 #endif /* block_hpp */

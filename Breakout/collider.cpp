@@ -88,24 +88,40 @@ void Collider::processCollisions(){
             In general, it is valid if obj1 is smaller than obj2.
             It is yet to be generalized.
          */
+//        else{
+//            // Ball bottom edge, obsticle top edge (eg. Paddle)
+//            if(   it->a->getX1() >= it->b->getX1()
+//               && it->a->getX2() <= it->b->getX2()
+//               && it->a->getY1() <= it->b->getY2()) {
+//                res = Collider::BOTTOM_EDGE_A|Collider::TOP_EDGE_B;
+//                it->onCollision(it->a, it->b, it->name, res);
+//                return;
+//            }
+//            //Ball top edge, obsticle bottom edge
+//            else if(    it->a->getX1() >= it->b->getX1()
+//                    &&  it->a->getX2() <= it->b->getX2()
+//                    &&  it->a->getY2() >= it->b->getY1()){
+//                res = Collider::BOTTOM_EDGE_B|Collider::TOP_EDGE_A;
+//                it->onCollision(it->a, it->b, it->name, res);
+//                return;
+//            }
+
         else{
-            // Ball bottom edge, obsticle top edge (eg. Paddle)
-            if(it->a->getX1() >= it->b->getX1()
-               && it->a->getX2() <= it->b->getX2()
-               && it->a->getY1() <= it->b->getY2()) {
-                res = Collider::BOTTOM_EDGE_A|Collider::TOP_EDGE_B;
-                it->onCollision(it->a, it->b, it->name, res);
-                return;
-            }
-            //Ball top edge, obsticle bottom edge
-            else if(    it->a->getX1() >= it->b->getX1()
-                    &&  it->a->getX2() <= it->b->getX2()
-                    &&  it->a->getY2() >= it->b->getY1()){
-                res = Collider::BOTTOM_EDGE_B|Collider::TOP_EDGE_A;
-                it->onCollision(it->a, it->b, it->name, res);
-                return;
-            }
-            
+            if(     it->a->getX2() >= it->b->getX1()
+                &&  it->a->getX2() <= it->b->getX2())
+                res = Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B;
+
+            else if(it->a->getX1() <= it->b->getX2()
+                &&  it->a->getX1() >= it->b->getX1())
+                res = Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B;
+
+            if(     it->a->getY2() >= it->b->getY1()
+                &&  it->a->getY2() <= it->b->getY2())
+                res |= Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B;
+
+            else if(it->a->getY1() <= it->b->getY2()
+                &&  it->a->getY1() >= it->b->getY1())
+                res |= Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B;
         }
 
         it->onCollision(it->a, it->b, it->name, res);

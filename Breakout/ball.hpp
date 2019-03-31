@@ -29,7 +29,7 @@ class Ball : public GameObject{
 private:
     float x, y;
     float dx, dy;
-    float slope, vx, vy;
+    float slope, vx, vy, angle;
 
 public:
     Ball();
@@ -41,6 +41,7 @@ public:
     float getVy();
     int getDx();
     int getDy();
+    float getAngle();
     
     void setX(int X);
     void setY(int Y);
@@ -49,6 +50,7 @@ public:
     void setVy(float Vy);
     void setDx(int Dx);
     void setDy(int Dy);
+    void setAngle(float a);
         
     virtual int getX1();
     virtual int getX2();
@@ -56,5 +58,7 @@ public:
     virtual int getY2();
     virtual void getBoundingBox(int *x1, int *x2, int *y1, int *y2);
     virtual void draw();
+    virtual int getMidX();
+    virtual int getMidY();
 };
 #endif /* ball_hpp */
