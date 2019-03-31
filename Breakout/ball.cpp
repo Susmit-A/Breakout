@@ -16,8 +16,8 @@ Ball::Ball(){
     dy = 1;
     x = 250;
     y = 30;
-    vx = 2;
-    vy = 2;
+    vx = 4;
+    vy = 4;
     angle = 45;
 }
 
