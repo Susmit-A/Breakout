@@ -15,8 +15,8 @@ Ball::Ball(){
     dy = 1;
     x = 250;
     y = 30;
-    vx = 1;
-    vy = 1;
+    vx = 2;
+    vy = 2;
 }
 
 int Ball::getX1(){
@@ -49,10 +49,10 @@ void Ball::draw(){
     
     glColor3f(1, 1, 1);
     glBegin(GL_POLYGON);
-    glVertex2i(x, y);
-    glVertex2i(x+5, y);
-    glVertex2i(x+5, y+5);
-    glVertex2i(x, y+5);
+    glVertex2f(x, y);
+    glVertex2f(x+5, y);
+    glVertex2f(x+5, y+5);
+    glVertex2f(x, y+5);
     glEnd();
 }
 

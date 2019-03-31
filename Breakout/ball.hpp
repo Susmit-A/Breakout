@@ -27,9 +27,8 @@
 
 class Ball : public GameObject{
 private:
-    int x, y;
-    int dx, dy;
-    int anim_time;
+    float x, y;
+    float dx, dy;
     float slope, vx, vy;
 
 public:

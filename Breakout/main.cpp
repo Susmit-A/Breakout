@@ -35,7 +35,6 @@ Collider *mainCollider;
 
 void display(){
     glClear(GL_COLOR_BUFFER_BIT);
-    mainCollider->processCollisions();
     
     paddle->draw();
     ball->draw();
@@ -45,7 +44,13 @@ void display(){
             block_matrix[i][j]->draw();
     
     glutSwapBuffers();
+}
+
+
+void onTimerTick(int flag){
+    mainCollider->processCollisions();
     glutPostRedisplay();
+    glutTimerFunc(1000/60, onTimerTick, 0);
 }
 
 void init() {
@@ -92,7 +97,7 @@ void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsi
 }
 
 void ballBlockCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
-    if(((Block*)obj2)->exists()==false)
+    if(!((Block*)obj2)->exists())
         return;
     if(code==(Collider::TOP_EDGE_A|Collider::BOTTOM_EDGE_B)) {
         ((Block*)obj2)->destroy();
@@ -127,6 +132,7 @@ int main(int argc, char **argv) {
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
     glutInitWindowSize(600, 600);
     glutCreateWindow("Breakout");
+    glutTimerFunc(1000/60, onTimerTick, 0);
     glutDisplayFunc(display);
     glutKeyboardFunc(keyPressed);
     glutSpecialFunc(specialKeyPressed);
