@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 #ifdef _WIN32
-#include <GL/glut.h>L
+#include <GL/glut.h>
 
 #elif __APPLE__
 #include <GLUT/GLUT.h>
@@ -32,6 +32,9 @@ Paddle *paddle;
 Block *block_matrix[5][10];
 Ball *ball;
 Collider *mainCollider;
+
+long elapsedTime = 0;
+long oldElapsedTime = 0;
 
 void display(){
     glClear(GL_COLOR_BUFFER_BIT);
