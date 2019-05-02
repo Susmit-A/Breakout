@@ -81,19 +81,6 @@ void Paddle::moveTo(int X, int Y){
     y = Y;
 }
 
-void Paddle::idleDraw() {
-    glPushMatrix();
-    glTranslatef(tx, ty, 0);
-    glColor3f(color->getRed(), color->getGreen(), color->getBlue());
-    glBegin(GL_POLYGON);
-    glVertex2f(x, y);
-    glVertex2f(x+len, y);
-    glVertex2f(x+len, y+wid);
-    glVertex2f(x, y+wid);
-    glEnd();
-    glPopMatrix();
-}
-
 void Paddle::draw(){
     glPushMatrix();
     glTranslatef(tx, ty, 0);

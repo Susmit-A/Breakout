@@ -42,7 +42,6 @@ public:
     int getDx();
     int getDy();
     float getAngle();
-    void idleDraw();
 
     void setX(int X);
     void setY(int Y);

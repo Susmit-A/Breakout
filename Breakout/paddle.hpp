@@ -43,8 +43,7 @@ public:
     void setLength(int l);
     void moveTo(int X, int Y);
     void translateBy(int x, int y);
-    void idleDraw();
-    
+
     virtual int getX1();
     virtual int getX2();
     virtual int getY1();
