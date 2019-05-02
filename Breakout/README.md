@@ -47,7 +47,7 @@ The `display` callback has been reserved for drawing purposes only. All calculat
     - Ubuntu 18.10 Cosmic Cuttlefish with GNOME 3 Desktop
     
 - Compiler and Libraries
-  - GNU g++ compiler version 6.5.0 x86_64 (Linus and MacOS)
+  - GNU g++ compiler version 6.5.0 x86_64
   - Microsoft Visual C++ compiler
   - C++11 standard libraries
   - OpenGL >= 1.0 with GLU and GLUT
