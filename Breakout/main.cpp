@@ -27,6 +27,8 @@
 #include "ball.hpp"
 #include "collider.hpp"
 #include "game_object.hpp"
+
+#include <algorithm>
 #include <string.h>
 
 Paddle *paddle;
@@ -39,7 +41,7 @@ bool gameOver = false;
 void text()
 {
     char txt[10];
-
+    
     glBegin(GL_POLYGON);
     glColor3f(0.4,0,0.8);
     glVertex2f(0, 200.0f);
@@ -50,34 +52,34 @@ void text()
     glColor3f(0.6,0,0.6);
     glVertex2f(0, 400);
     glEnd();
-
+    
     strcpy(txt,"Game Over");
     int len;
     len = strlen(txt);
-
+    
     glColor3f(1,1,1);
-
+    
     glMatrixMode( GL_PROJECTION );
     glPushMatrix();
     glLoadIdentity();
-
+    
     gluOrtho2D( 0, 600, 0, 600 );
-
+    
     glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
-
+    
     glLoadIdentity();
-
+    
     glRasterPos2i(190, 300);
-
-
+    
+    
     for ( int i = 0; i < len; ++i )
     {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, txt[i]);
     }
-
+    
     glPopMatrix();
-
+    
     glMatrixMode( GL_PROJECTION );
     glPopMatrix();
     glMatrixMode( GL_MODELVIEW );
@@ -169,63 +171,73 @@ void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsi
 void ballBlockCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
     if(!((Block*)obj2)->exists())
         return;
-
-    // If collision along Y-axis, ball from bottom
-    if((code&(Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B))
-       ==
-       (Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B)) {
-
-        // Any overlap along X-axis
-        if((code & (~(Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B))) !=0) {
-            ball->setAngle(-90);
-            ((Block*)obj2)->destroy();
+    
+    // Collision along Y-axis
+    if(std::min(abs(obj1->getX1() - obj2->getX2()), abs(obj1->getX2() - obj2->getX1()))
+       >
+       std::min(abs(obj1->getY1() - obj2->getY2()), abs(obj1->getY2() - obj2->getY1()))) {
+        
+        
+        // If collision along Y-axis, ball from bottom
+        if((code&(Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B))
+           ==
+           (Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B)) {
+        
+            // Any overlap along X-axis
+            if((code & (~(Collider::TOP_EDGE_A | Collider::BOTTOM_EDGE_B))) !=0) {
+                ball->setAngle(-90);
+                ((Block*)obj2)->destroy();
+            }
+        }
+    
+        // If collision along Y-axis, ball from top
+        else if((code&(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))
+                ==
+                (Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B)) {
+        
+            // Any overlap along X-axis
+            if((code & (~(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))) !=0) {
+                ball->setAngle(90);
+                ((Block*)obj2)->destroy();
+            }
         }
     }
-
-    // If collision along Y-axis, ball from top
-    else if((code&(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))
-       ==
-       (Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B)) {
-
-        // Any overlap along X-axis
-        if((code & (~(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))) !=0) {
-            ball->setAngle(90);
-            ((Block*)obj2)->destroy();
+    
+    // Collision along X-axis
+    else {
+        // If collision along X-axis, ball from left
+        if((code&(Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B))
+                ==
+                (Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B)) {
+        
+            // Any overlap along Y-axis
+            if((code & (~(Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B))) !=0) {
+                ball->setDx(1);
+                ((Block*)obj2)->destroy();
+            }
         }
-    }
-
-    // If collision along X-axis, ball from left
-    else if((code&(Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B))
-       ==
-       (Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B)) {
-
-        // Any overlap along Y-axis
-        if((code & (~(Collider::LEFT_EDGE_A | Collider::RIGHT_EDGE_B))) !=0) {
-            ball->setDx(1);
-            ((Block*)obj2)->destroy();
-        }
-    }
-
-    // If collision along X-axis, ball from right
-    else if((code&(Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B))
-            ==
-            (Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B)) {
-
-        // Any overlap along Y-axis
-        if((code & (~(Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B))) !=0) {
-            ball->setDx(1);
-            ((Block*)obj2)->destroy();
+    
+        // If collision along X-axis, ball from right
+        else if((code&(Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B))
+                ==
+                (Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B)) {
+        
+            // Any overlap along Y-axis
+            if((code & (~(Collider::RIGHT_EDGE_A | Collider::LEFT_EDGE_B))) !=0) {
+                ball->setDx(-1);
+                ((Block*)obj2)->destroy();
+            }
         }
     }
 }
 
 void ballPaddleCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
-
+    
     // If collision along Y-axis
     if((code&(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))
-            ==
-        (Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B)) {
-
+       ==
+       (Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B)) {
+        
         // Any overlap along X-axis
         if((code & (~(Collider::BOTTOM_EDGE_A | Collider::TOP_EDGE_B))) !=0) {
             ball->setAngle(90.0f - abs(obj2->getMidX() - obj1->getMidX())/(obj2->getMidX() - obj2->getX1()));
@@ -253,7 +265,7 @@ int main(int argc, char **argv) {
             block_matrix[i][j] = new Block(60*j, 550-(20*i));
             mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
         }
-
+    
     
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);

@@ -11,7 +11,7 @@
 
 #include "colors.h"
 #ifdef _WIN32
-#include <GL/glut.h>L
+#include <GL/glut.h>
 
 #elif __APPLE__
 #include <GLUT/GLUT.h>
