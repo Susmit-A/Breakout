@@ -39,6 +39,14 @@ int Paddle::getY(){
     return y;
 }
 
+int Paddle::getMidX() {
+    return (getX1() + getX2())/2;
+}
+
+int Paddle::getMidY() {
+    return (getY1() + getY2())/2;
+}
+
 void Paddle::setX(int X){
     x = X;
 }

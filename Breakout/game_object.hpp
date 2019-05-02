@@ -16,6 +16,8 @@ public:
     virtual int getY1() = 0;
     virtual int getY2() = 0;
     virtual void getBoundingBox(int *x1, int *x2, int *y1, int *y2) = 0;
+    virtual int getMidX() = 0;
+    virtual int getMidY() = 0;
     virtual void draw() = 0;
 };
 #endif /* game_object_h */

@@ -12,7 +12,7 @@
 #include "colors.h"
 
 #ifdef _WIN32
-#include <GL/glut.h>L
+#include <GL/glut.h>
 
 #elif __APPLE__
 #include <GLUT/GLUT.h>
@@ -49,6 +49,8 @@ public:
     virtual int getY2();
     virtual void getBoundingBox(int *x1, int *x2, int *y1, int *y2);
     virtual void draw();
+    virtual int getMidX();
+    virtual int getMidY();
 };
 
 
