@@ -27,7 +27,7 @@
 
 class Ball : public GameObject{
 private:
-    float x, y;
+    float x, y, r, tx, ty;
     float dx, dy;
     float slope, vx, vy, angle;
 
@@ -42,7 +42,8 @@ public:
     int getDx();
     int getDy();
     float getAngle();
-    
+    void idleDraw();
+
     void setX(int X);
     void setY(int Y);
     void setSlope(float s);

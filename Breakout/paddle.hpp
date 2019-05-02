@@ -28,7 +28,7 @@
 
 class Paddle : public GameObject{
 private:
-    int x, y;
+    int x, y, tx, ty;
     int len, wid;
     Color *color;
     
@@ -42,6 +42,8 @@ public:
     int getWidth();
     void setLength(int l);
     void moveTo(int X, int Y);
+    void translateBy(int x, int y);
+    void idleDraw();
     
     virtual int getX1();
     virtual int getX2();

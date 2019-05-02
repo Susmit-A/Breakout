@@ -11,6 +11,8 @@
 Paddle::Paddle(){
     x = 200;
     y = 20;
+    tx = 0;
+    ty = 0;
     len = 100;
     wid = 10;
     color = new Color(255, 0, 0);
@@ -79,7 +81,9 @@ void Paddle::moveTo(int X, int Y){
     y = Y;
 }
 
-void Paddle::draw(){
+void Paddle::idleDraw() {
+    glPushMatrix();
+    glTranslatef(tx, ty, 0);
     glColor3f(color->getRed(), color->getGreen(), color->getBlue());
     glBegin(GL_POLYGON);
     glVertex2f(x, y);
@@ -87,4 +91,27 @@ void Paddle::draw(){
     glVertex2f(x+len, y+wid);
     glVertex2f(x, y+wid);
     glEnd();
+    glPopMatrix();
+}
+
+void Paddle::draw(){
+    glPushMatrix();
+    glTranslatef(tx, ty, 0);
+    glColor3f(color->getRed(), color->getGreen(), color->getBlue());
+    glBegin(GL_POLYGON);
+    glVertex2f(x, y);
+    glVertex2f(x+len, y);
+    glVertex2f(x+len, y+wid);
+    glVertex2f(x, y+wid);
+    glEnd();
+    glPopMatrix();
+    x += tx;
+    y += ty;
+    tx = 0;
+    ty = 0;
+}
+
+void Paddle::translateBy(int tr_x, int tr_y) {
+    tx += tr_x;
+    ty += tr_y;
 }

@@ -18,6 +18,9 @@ Ball::Ball(){
     y = 30;
     vx = 2;
     vy = 2;
+    r = 3;
+    tx = 0;
+    ty = 0;
     angle = 45;
 }
 
@@ -55,18 +58,35 @@ void Ball::getBoundingBox(int *X1,  int *X2, int *Y1, int *Y2){
 
 void Ball::draw(){
     // dx = cos((angle*3.14159265359f)/180.0f);
-    dy = sin((angle*3.14159265359f)/180.0f);
+//    dy = sin((angle*3.14159265359f)/180.0f);
+//
+//    x += vx*dx;
+//    y += vy*dy;
 
-    x += vx*dx;
-    y += vy*dy;
-    
     glColor3f(1, 1, 1);
+
+    dy = sin((angle*3.14159265359f)/180.0f);
+    tx = vx*dx;
+    ty = vy*dy;
+    glPushMatrix();
+    glTranslatef(tx, ty, 0);
+
     glBegin(GL_POLYGON);
-    glVertex2f(x, y);
-    glVertex2f(x+5, y);
-    glVertex2f(x+5, y+5);
-    glVertex2f(x, y+5);
+    for(int ii = 0; ii < 360; ii++)
+    {
+        float theta = 2.0f * 3.1415926f * float(ii) / float(360);//get the current angle
+
+        float rx = r * cosf(theta);//calculate the x component
+        float ry = r * sinf(theta);//calculate the y component
+
+        glVertex2f(x + rx, y + ry);//output vertex
+
+    }
     glEnd();
+
+    glPopMatrix();
+    x += tx;
+    y += ty;
 }
 
 int Ball::getX(){
@@ -132,4 +152,3 @@ float Ball::getAngle() {
 void Ball::setAngle(float a) {
     angle = a;
 }
-

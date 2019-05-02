@@ -102,11 +102,12 @@ void display(){
     glutSwapBuffers();
 }
 
-
 void onTimerTick(int flag){
     mainCollider->processCollisions();
+
+    glutSwapBuffers();
     glutPostRedisplay();
-    glutTimerFunc(1000/60, onTimerTick, 0);
+    glutTimerFunc(1000/120, onTimerTick, 0);
 }
 
 void init() {
@@ -143,10 +144,14 @@ void specialKeyPressed(int key, int x, int y){
     int px = paddle->getX();
     int len = paddle->getLength();
     if(key==GLUT_KEY_LEFT && px > 10){
-        paddle->moveTo(px - 10, paddle->getY());
+        //paddle->moveTo(px - 10, paddle->getY());
+        paddle->translateBy(-10, 0);
+        //glutSwapBuffers();
     }
     else if(key==GLUT_KEY_RIGHT && px+len < 590){
-        paddle->moveTo(px + 10, paddle->getY());
+        //paddle->moveTo(px + 10, paddle->getY());
+        paddle->translateBy(10, 0);
+        //glutSwapBuffers();
     }
 }
 
