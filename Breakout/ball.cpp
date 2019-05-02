@@ -56,12 +56,7 @@ void Ball::getBoundingBox(int *X1,  int *X2, int *Y1, int *Y2){
 }
 
 
-void Ball::draw(){
-    // dx = cos((angle*3.14159265359f)/180.0f);
-//    dy = sin((angle*3.14159265359f)/180.0f);
-//
-//    x += vx*dx;
-//    y += vy*dy;
+void Ball::draw() {
 
     glColor3f(1, 1, 1);
 
@@ -74,7 +69,7 @@ void Ball::draw(){
     glBegin(GL_POLYGON);
     for(int ii = 0; ii < 360; ii++)
     {
-        float theta = 2.0f * 3.1415926f * float(ii) / float(360);//get the current angle
+        float theta = 2.0f * 3.14159265359f * (float)ii / 360.0f;//get the current angle
 
         float rx = r * cosf(theta);//calculate the x component
         float ry = r * sinf(theta);//calculate the y component

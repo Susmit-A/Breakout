@@ -174,6 +174,10 @@ void ballWallCollider(GameObject *obj1, GameObject *obj2, std::string name, unsi
 }
 
 void ballBlockCollider(GameObject *obj1, GameObject *obj2, std::string name, unsigned char code){
+
+    if(code==0)
+        return;
+
     if(!((Block*)obj2)->exists())
         return;
     
@@ -276,7 +280,7 @@ int main(int argc, char **argv) {
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
     glutInitWindowSize(600, 600);
     glutCreateWindow("Breakout");
-    glutTimerFunc(1000/60, onTimerTick, 0);
+    glutTimerFunc(1000/120, onTimerTick, 0);
     glutDisplayFunc(display);
     glutKeyboardFunc(keyPressed);
     glutSpecialFunc(specialKeyPressed);
