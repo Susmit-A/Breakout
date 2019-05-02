@@ -51,6 +51,8 @@ iostream
 -
 stdlib.h
 -
+ctype.h
+-
 GL/glut.h
 -
 GLUT/GLUT.h

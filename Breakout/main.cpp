@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <ctype.h>
 
 #ifdef _WIN32
 #include <GL/glut.h>
@@ -262,19 +263,19 @@ void ballPaddleCollider(GameObject *obj1, GameObject *obj2, std::string name, un
 
 int main(int argc, char **argv) {
     srand(0);
+
     paddle = new Paddle();
     ball = new Ball();
     mainCollider = new Collider();
     
     mainCollider->add(ball, nullptr, "ball_wall", ballWallCollider);
     mainCollider->add(ball, paddle, "ball_paddle", ballPaddleCollider);
-    
+
     for(int i=0;i<5;i++)
         for(int j=0;j<10;j++){
             block_matrix[i][j] = new Block(60*j, 550-(20*i));
             mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
         }
-    
     
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);

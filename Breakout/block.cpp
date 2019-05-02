@@ -68,8 +68,17 @@ bool Block::exists(){
 void Block::destroy(){
     exist = false;
 }
+
+void Block::setColor(Color *col) {
+    color = col;
+}
+
+Color *Block::getColor() {
+    return color;
+}
+
 void Block::draw(){
-    if(exist==false)
+    if(!exist)
         return;
     glColor3ub(color->getRed(), color->getGreen(), color->getBlue());
     glBegin(GL_POLYGON);

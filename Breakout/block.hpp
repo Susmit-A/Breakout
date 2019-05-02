@@ -38,6 +38,8 @@ public:
     int getLength();
     bool exists();
     void destroy();
+    Color *getColor();
+    void setColor(Color* col);
     
     virtual int getX1();
     virtual int getX2();
