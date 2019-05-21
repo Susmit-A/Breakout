@@ -28,14 +28,15 @@
 class Block : public GameObject{
 private:
     int x, y;
-    int len, wid;
     Color *color;
     bool exist;
 public:
+    static int len, wid;
     Block(int X, int Y);
     int getX();
     int getY();
-    int getLength();
+    static void setLength(int l);
+    static void setWidth(int w);
     bool exists();
     void destroy();
     Color *getColor();

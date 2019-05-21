@@ -33,11 +33,11 @@ int Ball::getY1(){
 }
 
 int Ball::getX2(){
-    return getX() + 5;
+    return getX() + r;
 }
 
 int Ball::getY2(){
-    return getY() + 5;
+    return getY() + r;
 }
 
 int Ball::getMidX() {

@@ -9,11 +9,12 @@
 #include "block.hpp"
 #include <stdlib.h>
 
+int Block::len = 60;
+int Block::wid = 20;
+
 Block::Block(int X, int Y){
     x = X;
     y = Y;
-    len = 60;
-    wid = 20;
     color = new Color(rand()%255, rand()%255, rand()%255);
     exist = true;
 }
@@ -57,10 +58,6 @@ int Block::getMidY() {
     return (getY1() + getY2())/2;
 }
 
-int Block::getLength(){
-    return len;
-}
-
 bool Block::exists(){
     return exist;
 }
@@ -83,10 +80,8 @@ void Block::draw(){
     glColor3ub(color->getRed(), color->getGreen(), color->getBlue());
     glBegin(GL_POLYGON);
     glVertex2f(x, y);
-    glVertex2f(x+len, y);
-    glVertex2f(x+len, y+wid);
-    glVertex2f(x, y+wid);
+    glVertex2f(x+Block::len, y);
+    glVertex2f(x+Block::len, y+Block::wid);
+    glVertex2f(x, y+Block::wid);
     glEnd();
 }
-
-

@@ -288,6 +288,8 @@ void loadLayoutFromFile(const char* path) {
     }
     fin >> rows;
     fin >> cols;
+    fin >> Block::len;
+    fin >> Block::wid;
     fin >> colorMode;
 
     cout<<"Rows: "<<rows<<endl;
@@ -325,7 +327,7 @@ int main(int argc, char **argv) {
     mainCollider->add(ball, paddle, "ball_paddle", ballPaddleCollider);
 
     // loadDefaultLayout();
-    loadLayoutFromFile("/home/susmit/gitprojects/Breakout/Breakout/levels/basic.conf");
+    loadLayoutFromFile("/home/susmit/gitprojects/Breakout/Breakout/levels/pokeball.conf");
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);

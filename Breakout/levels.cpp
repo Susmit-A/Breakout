@@ -12,7 +12,7 @@ Level::Level(int r=5, int c=10) {
     for(int i=0;i<rows;i++) {
         blocks[i] = new Block *[cols];
         for (int j = 0; j < cols; j++) {
-            blocks[i][j] = new Block(60 * j, 550 - (20 * i));
+            blocks[i][j] = new Block(Block::len * j, 550 - (Block::wid * i));
         }
     }
 }
