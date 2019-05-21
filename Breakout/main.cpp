@@ -28,14 +28,22 @@
 #include "ball.hpp"
 #include "collider.hpp"
 #include "game_object.hpp"
+#include "levels.h"
+#include "prototypes.h"
 
 #include <algorithm>
 #include <string.h>
+#include <fstream>
+
+using namespace std;
 
 Paddle *paddle;
-Block *block_matrix[5][10];
+Block ***block_matrix;
 Ball *ball;
 Collider *mainCollider;
+Level *level;
+
+char *fname = NULL;
 
 bool gameOver = false;
 
@@ -96,8 +104,8 @@ void display(){
     paddle->draw();
     ball->draw();
     
-    for(int i=0;i<5;i++)
-        for(int j=0;j<10;j++)
+    for(int i=0;i<level->getRowCount();i++)
+        for(int j=0;j<level->getColumnCount();j++)
             block_matrix[i][j]->draw();
     
     glutSwapBuffers();
@@ -121,10 +129,10 @@ void reset(){
     gameOver = false;
     *ball = Ball();
     *paddle = Paddle();
-    for(int i=0;i<5;i++)
-        for(int j=0;j<10;j++){
-            *block_matrix[i][j] = Block(60*j, 550-(20*i));
-        }
+    if(fname)
+        loadLayoutFromFile(fname);
+    else
+        loadDefaultLayout();
 }
 
 void keyPressed(unsigned char key, int x, int y){
@@ -145,14 +153,10 @@ void specialKeyPressed(int key, int x, int y){
     int px = paddle->getX();
     int len = paddle->getLength();
     if(key==GLUT_KEY_LEFT && px > 10){
-        //paddle->moveTo(px - 10, paddle->getY());
         paddle->translateBy(-10, 0);
-        //glutSwapBuffers();
     }
     else if(key==GLUT_KEY_RIGHT && px+len < 590){
-        //paddle->moveTo(px + 10, paddle->getY());
         paddle->translateBy(10, 0);
-        //glutSwapBuffers();
     }
 }
 
@@ -261,6 +265,55 @@ void ballPaddleCollider(GameObject *obj1, GameObject *obj2, std::string name, un
     }
 }
 
+void loadDefaultLayout() {
+    level = new Level(4, 10);
+    block_matrix = level->getBlockMatrix();
+
+    for(int i = 0; i < level->getRowCount() ; i++) {
+        for (int j = 0; j < level->getColumnCount(); j++) {
+            mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
+        }
+    }
+}
+
+void loadLayoutFromFile(const char* path) {
+    string colorMode;
+    fname = (char *)path;
+    int rows;
+    int cols;
+    ifstream fin(path, ios::in);
+    if(!fin) {
+        cout<<"Error opening file";
+        exit(0);
+    }
+    fin >> rows;
+    fin >> cols;
+    fin >> colorMode;
+
+    cout<<"Rows: "<<rows<<endl;
+    level = new Level(rows, cols);
+    block_matrix = level->getBlockMatrix();
+
+    for(int i = 0; i < level->getRowCount() ; i++) {
+        for (int j = 0; j < level->getColumnCount(); j++) {
+            if(strcmp(colorMode.c_str(), "fixed")==0) {
+                int color;
+                cout<<endl<<"Fixed"<<endl;
+                fin >> hex >> color;
+                cout << hex << color;
+                // Black - block doesn't exist
+                if(color==0)
+                    block_matrix[i][j]->destroy();
+
+                block_matrix[i][j]->setColor(new Color(color>>16 & 0xFF, color>>8 & 0xFF, color & 0xFF));
+            }
+
+            mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
+        }
+    }
+    fin.close();
+}
+
 int main(int argc, char **argv) {
     srand(0);
 
@@ -271,12 +324,9 @@ int main(int argc, char **argv) {
     mainCollider->add(ball, nullptr, "ball_wall", ballWallCollider);
     mainCollider->add(ball, paddle, "ball_paddle", ballPaddleCollider);
 
-    for(int i=0;i<5;i++)
-        for(int j=0;j<10;j++){
-            block_matrix[i][j] = new Block(60*j, 550-(20*i));
-            mainCollider->add(ball, block_matrix[i][j], "ball_block", ballBlockCollider);
-        }
-    
+    // loadDefaultLayout();
+    loadLayoutFromFile("/home/susmit/gitprojects/Breakout/Breakout/levels/basic.conf");
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
     glutInitWindowSize(600, 600);

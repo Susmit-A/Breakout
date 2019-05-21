@@ -110,6 +110,12 @@
 		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/game_object.hpp">
 			<Option target="main.cpp"/>
 		</Unit>
+		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/levels.cpp">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/levels.h">
+			<Option target="main.cpp"/>
+		</Unit>
 		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/main.cpp">
 			<Option target="main.cpp"/>
 		</Unit>
@@ -117,6 +123,9 @@
 			<Option target="main.cpp"/>
 		</Unit>
 		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/paddle.hpp">
+			<Option target="main.cpp"/>
+		</Unit>
+		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/prototypes.h">
 			<Option target="main.cpp"/>
 		</Unit>
 		<Unit filename="/home/susmit/gitprojects/Breakout/Breakout/CMakeLists.txt">

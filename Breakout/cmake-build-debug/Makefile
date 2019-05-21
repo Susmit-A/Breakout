@@ -204,6 +204,33 @@ collider.cpp.s:
 	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/collider.cpp.s
 .PHONY : collider.cpp.s
 
+levels.o: levels.cpp.o
+
+.PHONY : levels.o
+
+# target to build an object file
+levels.cpp.o:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/levels.cpp.o
+.PHONY : levels.cpp.o
+
+levels.i: levels.cpp.i
+
+.PHONY : levels.i
+
+# target to preprocess a source file
+levels.cpp.i:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/levels.cpp.i
+.PHONY : levels.cpp.i
+
+levels.s: levels.cpp.s
+
+.PHONY : levels.s
+
+# target to generate assembly for a file
+levels.cpp.s:
+	$(MAKE) -f CMakeFiles/main.cpp.dir/build.make CMakeFiles/main.cpp.dir/levels.cpp.s
+.PHONY : levels.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -276,6 +303,9 @@ help:
 	@echo "... collider.o"
 	@echo "... collider.i"
 	@echo "... collider.s"
+	@echo "... levels.o"
+	@echo "... levels.i"
+	@echo "... levels.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
