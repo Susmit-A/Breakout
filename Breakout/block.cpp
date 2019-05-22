@@ -28,11 +28,11 @@ int Block::getY1(){
 }
 
 int Block::getX2(){
-    return getX() + 60;
+    return getX() + len;
 }
 
 int Block::getY2(){
-    return getY() + 20;
+    return getY() + wid;
 }
 
 void Block::getBoundingBox(int *X1,  int *X2, int *Y1, int *Y2){

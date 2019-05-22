@@ -20,6 +20,12 @@ OpenGL/OpenGL.h
 glut.h
 -
 
+/home/susmit/gitprojects/Breakout/Breakout/block.cpp
+block.hpp
+/home/susmit/gitprojects/Breakout/Breakout/block.hpp
+stdlib.h
+-
+
 /home/susmit/gitprojects/Breakout/Breakout/block.hpp
 colors.h
 /home/susmit/gitprojects/Breakout/Breakout/colors.h
