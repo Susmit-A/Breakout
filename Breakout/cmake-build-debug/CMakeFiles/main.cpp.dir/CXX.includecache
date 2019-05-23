@@ -86,6 +86,10 @@ string.h
 fstream
 -
 
+/home/susmit/gitprojects/Breakout/Breakout/paddle.cpp
+paddle.hpp
+/home/susmit/gitprojects/Breakout/Breakout/paddle.hpp
+
 /home/susmit/gitprojects/Breakout/Breakout/paddle.hpp
 colors.h
 /home/susmit/gitprojects/Breakout/Breakout/colors.h
