@@ -292,7 +292,6 @@ void loadLayoutFromFile(const char* path) {
     fin >> Block::wid;
     fin >> colorMode;
 
-    cout<<"Rows: "<<rows<<endl;
     level = new Level(rows, cols);
     block_matrix = level->getBlockMatrix();
 
@@ -300,9 +299,7 @@ void loadLayoutFromFile(const char* path) {
         for (int j = 0; j < level->getColumnCount(); j++) {
             if(strcmp(colorMode.c_str(), "fixed")==0) {
                 int color;
-                cout<<endl<<"Fixed"<<endl;
                 fin >> hex >> color;
-                cout << hex << color;
                 // Black - block doesn't exist
                 if(color==0)
                     block_matrix[i][j]->destroy();
