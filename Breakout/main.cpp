@@ -111,10 +111,11 @@ void display(){
     glutSwapBuffers();
 }
 
-void onTimerTick(int flag){
+void idleFunc() {
     mainCollider->processCollisions();
+}
 
-    glutSwapBuffers();
+void onTimerTick(int flag) {
     glutPostRedisplay();
     glutTimerFunc(1000/120, onTimerTick, 0);
 }
@@ -332,6 +333,7 @@ int main(int argc, char **argv) {
     glutCreateWindow("Breakout");
     glutTimerFunc(1000/120, onTimerTick, 0);
     glutDisplayFunc(display);
+    glutIdleFunc(idleFunc);
     glutKeyboardFunc(keyPressed);
     glutSpecialFunc(specialKeyPressed);
     init();
